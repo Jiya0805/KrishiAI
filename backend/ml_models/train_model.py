@@ -11,13 +11,8 @@ print("Starting model training and hyperparameter tuning...")
 try:
     df = pd.read_csv('Crop_recommendation.csv')
 except FileNotFoundError:
-    # Try loading from the script's directory
-    alt_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Crop_recommendation.csv')
-    try:
-        df = pd.read_csv(alt_path)
-    except FileNotFoundError:
-        print("Error: 'Crop_recommendation.csv' not found in the project root or script directory.")
-        exit()
+    print("Error: 'Crop_recommendation.csv' not found. Please place the file in the project's root folder.")
+    exit()
 
 # 2. Define features (X) and target (y)
 features = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
@@ -64,7 +59,7 @@ print(classification_report(y_test, y_pred))
 project_root = os.path.dirname(os.path.abspath(__file__))
 model_dir = os.path.join(project_root, 'backend', 'ml_models')
 os.makedirs(model_dir, exist_ok=True)
-model_path = os.path.join(model_dir, 'crop_predictor_model.pkl')
+model_path = os.path.join(model_dir, 'train_cnn_model.py')
 joblib.dump(best_model, model_path)
 
-print(f"\nOptimized model successfully trained and saved to: {model_path}")
+print(f"\nOptimized CNN model successfully trained and saved to: {model_path}")

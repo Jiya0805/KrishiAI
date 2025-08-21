@@ -26,7 +26,7 @@ MODEL_DIR = os.path.join(settings.BASE_DIR.parent, 'ml_models')
 
 # Load crop recommendation model
 try:
-    crop_model = joblib.load(os.path.join(MODEL_DIR, 'crop_predictor_model.pkl'))
+    crop_model = joblib.load(os.path.join(MODEL_DIR, 'train_model.py'))
     print("✅ Crop recommendation model loaded successfully")
 except Exception as e:
     crop_model = None
@@ -34,7 +34,7 @@ except Exception as e:
 
 # Load CNN models
 try:
-    plant_disease_model = tf.keras.models.load_model(os.path.join(MODEL_DIR, 'cnn_model.h5'))
+    plant_disease_model = tf.keras.models.load_model(os.path.join(MODEL_DIR, 'train_cnn_model.py'))
     print("✅ Plant disease model loaded successfully")
 except Exception as e:
     plant_disease_model = None
@@ -74,7 +74,7 @@ PEST_CLASSES = [
 
 # Initialize Gemini AI
 try:
-    genai.configure(api_key=os.getenv('GEMINI_API_KEY', 'your-gemini-api-key'))
+    genai.configure(api_key=os.getenv('GEMINI_API_KEY', 'AIzaSyDz3M8RMJctNkp8CD5sdtuv_nvmmcZen1k'))
     gemini_model = genai.GenerativeModel('gemini-1.5-flash')
 except Exception as e:
     print(f"❌ Failed to initialize Gemini AI: {e}")

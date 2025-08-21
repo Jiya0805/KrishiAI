@@ -6,7 +6,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 
 # --- 1. Load and Prepare the Data ---
-DATA_DIR = 'backend/cnn_data/agricultural-pests-image-dataset'
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'cnn_data', 'agricultural-pests-image-dataset')
 IMG_SIZE = (224, 224) 
 BATCH_SIZE = 32
 
@@ -20,6 +20,22 @@ train_ds = image_dataset_from_directory(
     subset='training',
     seed=42
 )
+
+# Debug: Print class names detected
+print("Class names detected:")
+print(train_ds.class_names)
+
+# Debug: Count images per class in train_ds
+class_counts = {name: 0 for name in train_ds.class_names}
+for batch_images, batch_labels in train_ds:
+    labels = batch_labels.numpy()
+    for label in labels:
+        class_idx = label.argmax()
+        class_name = train_ds.class_names[class_idx]
+        class_counts[class_name] += 1
+print("Number of images per class in training set:")
+for name, count in class_counts.items():
+    print(f"  {name}: {count}")
 
 val_ds = image_dataset_from_directory(
     DATA_DIR,
